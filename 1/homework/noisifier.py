@@ -7,6 +7,7 @@ import sys
 import librosa
 import numpy as np
 import soundfile as sf
+import argparse
 
 
 def get_sounds(path, sr):
@@ -93,14 +94,27 @@ def generate_noised_versions(data_path, target_path, noise_path, music_alpha,
 
 
 def main(argv):
-    data_path = argv[0]
-    target_path = argv[1]
-    noise_path = argv[2]
-    music_alpha = float(argv[3])
-    beep_alpha = float(argv[4])
-    beep_frequency = float(argv[5])
-    generate_noised_versions(data_path, target_path, noise_path,
-                             music_alpha, beep_alpha, beep_frequency)
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('data_path',
+                        help='Path to data to be processed')
+    parser.add_argument('target_path',
+                        help='Path to store noised data')
+    parser.add_argument('noise_path',
+                        help='Path to directory with noise samples')
+    parser.add_argument('music_alpha', type=float,
+                        help='Loudness level for music')
+    parser.add_argument('beep_alpha', type=float,
+                        help='Loudness level for beeps')
+    parser.add_argument('beep_frequency', type=float,
+                        help='Beeps frequency')
+
+    args = vars(parser.parse_args())
+    generate_noised_versions(args["data_path"],
+                             args["target_path"],
+                             args["noise_path"],
+                             args["music_alpha"],
+                             args["beep_alpha"],
+                             args["beep_frequency"])
 
 
 if __name__ == "__main__":
