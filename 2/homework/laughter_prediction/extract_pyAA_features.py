@@ -19,8 +19,8 @@ def get_features_from_wav(wav_path, sec):
     rate, audio = wav.read(wav_path)
 
     short_frame = rate * sec
-    mt_features = mtFeatureExtraction(audio, rate, mtWin=short_frame * 10, mtStep=short_frame,
-                                      stWin=short_frame, stStep=short_frame)
+    mt_features = mtFeatureExtraction(audio, rate, mt_win=short_frame * 10, mt_step=short_frame,
+                                      st_win=short_frame, st_step=short_frame)
     big_mat = np.vstack([mt_features[0], mt_features[1]]).T
     big_mat = StandardScaler().fit_transform(big_mat)
     big_df = pd.DataFrame(big_mat)
